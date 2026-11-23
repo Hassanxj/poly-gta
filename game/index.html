@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poly GTA — Solmar</title>
+<meta name="description" content="Poly GTA: a low-poly open-world crime game in the coastal city of Solmar. Steal cars, outrun the police, run three jobs.">
+<style>
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+    background: #1b2a4a; font-family: Verdana, Geneva, sans-serif; }
+  #scene { display: block; width: 100%; height: 100%; }
+  .panel { position: absolute; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,.7); }
+  #hud { top: 12px; left: 14px; font-size: 15px; line-height: 1.5; pointer-events: none; }
+  #hud b { color: #ffd94d; }
+  #stars { font-size: 22px; letter-spacing: 3px; color: #ffd94d; }
+  #stars .off { color: rgba(255,255,255,.35); }
+  #missionBox { top: 12px; right: 14px; width: 280px; text-align: right; font-size: 14px;
+    pointer-events: none; }
+  #missionBox h2 { margin: 0 0 4px; font-size: 16px; color: #ffd94d; }
+  #cashLine { font-size: 20px; font-weight: bold; color: #7dff9a; }
+  #healthWrap { margin-top: 6px; width: 280px; height: 12px; background: rgba(0,0,0,.5);
+    border: 1px solid #fff; margin-left: auto; }
+  #healthBar { height: 100%; width: 100%; background: #3ddc5f; }
+  #minimap { position: absolute; right: 14px; bottom: 14px; width: 190px; height: 190px;
+    border: 2px solid rgba(255,255,255,.8); background: rgba(10,20,40,.55); }
+  #toast { left: 50%; bottom: 110px; transform: translateX(-50%); font-size: 19px;
+    font-weight: bold; text-align: center; pointer-events: none; }
+  #hint { left: 14px; bottom: 14px; font-size: 13px; opacity: .9; pointer-events: none; }
+  .screen { position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center; color: #fff;
+    background: linear-gradient(160deg, rgba(20,40,90,.92), rgba(120,40,90,.88)); }
+  .screen h1 { font-size: 56px; margin: 0; letter-spacing: 4px; color: #ffd94d;
+    text-shadow: 0 4px 0 #c22e6e, 0 8px 18px rgba(0,0,0,.6); }
+  .screen h3 { margin: 6px 0 18px; font-size: 20px; font-weight: normal; }
+  .screen p { max-width: 560px; font-size: 15px; line-height: 1.6; }
+  .screen button { margin-top: 18px; padding: 14px 42px; font-size: 20px; font-weight: bold;
+    color: #1b2a4a; background: #ffd94d; border: none; border-radius: 8px; cursor: pointer; }
+  .screen button:hover { background: #ffe98a; }
+  .hidden { display: none !important; }
+  kbd { background: #222; border: 1px solid #888; border-radius: 4px; padding: 1px 6px; }
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<div id="hud" class="panel">
+  <div id="stars"></div>
+  <div>Score: <b id="scoreVal">0</b></div>
+  <div id="cashLine">$<span id="cashVal">0</span></div>
+  <div id="speedVal"></div>
+</div>
+
+<div id="missionBox" class="panel">
+  <h2 id="missionName">Solmar</h2>
+  <div id="missionText">Steal a car and drive to the docks.</div>
+  <div id="healthWrap"><div id="healthBar"></div></div>
+</div>
+
+<canvas id="minimap" width="190" height="190"></canvas>
+<div id="toast" class="panel"></div>
+<div id="hint" class="panel">WASD move / drive &nbsp;·&nbsp; <kbd>E</kbd> steal car &nbsp;·&nbsp; <kbd>F</kbd> shoot &nbsp;·&nbsp; <kbd>H</kbd> horn &nbsp;·&nbsp; <kbd>P</kbd> pause</div>
+
+<div id="titleScreen" class="screen">
+  <h1>POLY GTA</h1>
+  <h3>Solmar — a low-poly open city</h3>
+  <p>You are Mara Voss, new in Solmar. Steal cars, outrun the police, and run
+  three jobs for the harbour crew. Earn $500 a job. Stay alive, stay free.</p>
+  <p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move &nbsp; <kbd>E</kbd> get in / out of a car &nbsp; <kbd>F</kbd> shoot &nbsp; <kbd>Space</kbd> brake</p>
+  <button id="startBtn">START GAME</button>
+  <p id="bestLine"></p>
+</div>
+
+<div id="pauseScreen" class="screen hidden">
+  <h1>PAUSED</h1>
+  <p>Take a breath. Solmar waits.</p>
+  <button id="resumeBtn">RESUME</button>
+</div>
+
+<div id="gameOverScreen" class="screen hidden">
+  <h1>BUSTED</h1>
+  <p id="gameOverText">The Solmar police caught up with you.</p>
+  <button id="retryBtn">TRY AGAIN</button>
+</div>
+
+<div id="winScreen" class="screen hidden">
+  <h1>SOLMAR IS YOURS</h1>
+  <p id="winText">All three jobs done. The harbour crew pays up.</p>
+  <button id="againBtn">PLAY AGAIN</button>
+</div>
+
+<script src="vendor/three.min.js"></script>
+<script src="src/world.js"></script>
+<script src="src/vehicles.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
